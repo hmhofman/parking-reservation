@@ -1,4 +1,4 @@
-<form id="form-reservation">
+<form id="form-reservation" method="post">
     <!-- fill the form attributes fort a fall-back using html -->
     @if ($reservation && $reservation->id)
     <input type="hidden" name='id' value='{{$reservation->id}}' />
