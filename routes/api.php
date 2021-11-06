@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix' => 'v1', 'as' => 'v1.'], function () {
+    foreach (File::allFiles(__DIR__ . '/Api/V1') as $file) {
+        require $file->getPathname();
+    }
+});

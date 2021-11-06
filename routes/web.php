@@ -16,3 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::group(['prefix' => 'parking', 'as' => 'parking.'], function() {
+    Route::get('/', 'ParkingController@index');
+    Route::get('/create', 'ParkingController@create'); // Show the form
+    Route::get('/{parking}', 'ParkingController@show');
+});
+Route::group(['prefix' => 'reservation', 'as' => 'reservation.'], function() {
+    Route::get('/', 'ReservationController@index');
+    Route::get('/create', 'ReservationController@create'); // Show the form
+    Route::get('/{parking}', 'ReservationController@show');
+});
