@@ -9,6 +9,7 @@ use App\Models\Parking;
 class Reservation extends Model
 {
     use HasFactory;
+    protected $table = 'reservation';
 
     /**
      * Status should not be 0;

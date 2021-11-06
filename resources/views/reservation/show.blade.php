@@ -1,10 +1,12 @@
 @extends('layouts.reservation')
-
+<?php
+    $reservation->loadMissing('parking');
+?>
 @section('content')
-    <table>
+<table>
         <thead>
             <tr>
-                <th>id</th>
+            <th>id</th>
                 <th>License Plate</th>
                 <th>Parking</th>
                 <th>Arrival</th>
@@ -13,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($reservations as $reservation)
+            <?php dd($reservation); ?>
             <tr>
                 <td>{{$reservation->id}}</td>
                 <td>{{$reservation->license_plate}}</td>
@@ -22,12 +24,6 @@
                 <td>{{$reservation->departure}}</td>
                 <td>{{$reservation->isPaid ? 'Yes' : 'No' }}</td>
             </tr>
-            @endforeach
         </tbody>
     </table>
-
-@endsection
-
-@section('pageTitle')
-    Available parkings
 @endsection

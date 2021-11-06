@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Reservation;
+use App\Models\Parking;
 
 class ReservationController extends Controller
 {
@@ -13,7 +15,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        return view('reservation/all');
+        return view('reservation/all', ['reservations' => Reservation::all()]);
     }
 
     /**
@@ -23,7 +25,7 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        return view('reservation/create');
+        return view('reservation/create', ['parkings' => Parking::all()]);
     }
 
     /**
@@ -43,9 +45,11 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Reservation $reservation)
     {
-        return view('reservation/show');
+        // $reservation->loadMissing(['parking']);   
+        dd($reservation);
+        return view('reservation/show', ['reservation' => $reservation]);
     }
 
     /**
@@ -54,9 +58,10 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Reservation $reservation)
     {
-        return view('reservation/edit');
+        $reservation->loadMissing(['parking']);   
+        return view('reservation/edit', ['reservation' => $reservation, 'parkings' => Parking::all()]);
     }
 
     /**
@@ -66,7 +71,7 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Reservation $reservation)
     {
         throw new Exception('Modifications in the database only through API calls');
     }
@@ -77,7 +82,7 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Reservation $reservation)
     {
         throw new Exception('Modifications in the database only through API calls');
     }
