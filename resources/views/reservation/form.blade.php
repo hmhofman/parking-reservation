@@ -51,7 +51,7 @@
 <script>
     (function() { // This does nothing, nearly limits the scope of variables
         
-        const reservation = JSON.parse('{{$reservation ? json_encode($reservation) : []}}');
+        const reservation = JSON.parse('{!! $reservation ? json_encode($reservation) : [] !!}');
 
         function fill() {
             const form = document.querySelector('#form-reservation');
@@ -66,17 +66,17 @@
             const option = event.target.options[event.target.selectedindex];
             document.querySelector('#reservation-spots').attribute('max', option.data.spots)
         });
-        document.querySelector('#form-reservation').onsubmit = () {
+        document.querySelector('#form-reservation').onsubmit = () => {
             // instead of using html form, send through API
             fill();
             axios.put(`/api/v1/reservations/${reservation.id}`, reservation).then(() => {
                 location.href = `/reservation/${reservation.id}`;
             });
         }
-        document.querySelector('#btnRM').onsubmit = () {
+        document.querySelector('#btnRM').onsubmit = () => {
             // fill();
             axios.delete(`/api/v1/reservations/${reservation.id}`, reservation).then(() => {
-
+                location.href = `/reservation/`;
             });
         }
     })();

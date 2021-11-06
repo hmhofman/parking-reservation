@@ -44,7 +44,7 @@ class ReservationController extends ApiController
     {
         // Autofill; do not override
         // $model->id = 
-        // dd($model);
+        dd($model);
         $model->arrival = $request->input('arrival');
         $model->departure = $request->input('arrival');
         if ($request->input('paid')) {
@@ -53,9 +53,9 @@ class ReservationController extends ApiController
         } else {
             $model->status = $model->status & ~ Reservation::STATUS_PAID;
         }
-        $model->parking_id = $request->input('arrival');
-        $model->spot = $request->input('arrival');
-        $model->license_plate = $request->input('arrival');
+        $model->parking_id = $request->input('parking_id');
+        $model->spot = $request->input('spot');
+        $model->license_plate = $request->input('license_plate');
     }
 
     /**
