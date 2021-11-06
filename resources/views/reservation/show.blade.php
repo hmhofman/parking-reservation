@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php dd($reservation); ?>
+            <!-- <?php // dd($reservation); ?> -->
             <tr>
                 <td>{{$reservation->id}}</td>
                 <td>{{$reservation->license_plate}}</td>
@@ -26,4 +26,5 @@
             </tr>
         </tbody>
     </table>
+    <a href="/reservation/{{$reservation->id}}/edit">Edit</a>
 @endsection

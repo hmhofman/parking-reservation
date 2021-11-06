@@ -3,6 +3,7 @@
 namespace App\Http\Api;
 
 use App\Http\Api\ApiController;
+use App\Http\Jobs\SendMailJob;
 
 
 /**
@@ -19,7 +20,7 @@ class ReservationController extends ApiController
      */
     public function store(Request $request)
     {
-        $model = new Reservation();
+        $model = $this->saveFill($request, new Reservation());
         if ($model->save()) {
             return response()->json(['reservation' => $model]);
         } else {
@@ -36,13 +37,25 @@ class ReservationController extends ApiController
      */
     public function update(Request $request, Reservation $reservation)
     {
-        // $reservation->id = 
-        $reservation->arrival = 
-        $reservation->departure = 
-        $reservation->status = 
-        $reservation->parking_id = 
-        $reservation->spot = 
-        $reservation->license_plate = 
+        $model = $this->saveFill($request, $reservation);
+
+    }
+    private function saveFill($request, $model)
+    {
+        // Autofill; do not override
+        // $model->id = 
+        // dd($model);
+        $model->arrival = $request->input('arrival');
+        $model->departure = $request->input('arrival');
+        if ($request->input('paid')) {
+            $model->status = $model->status | Reservation::STATUS_PAID;
+            dispatch(new SendMailJob($model));
+        } else {
+            $model->status = $model->status & ~ Reservation::STATUS_PAID;
+        }
+        $model->parking_id = $request->input('arrival');
+        $model->spot = $request->input('arrival');
+        $model->license_plate = $request->input('arrival');
     }
 
     /**
